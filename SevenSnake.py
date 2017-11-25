@@ -104,7 +104,7 @@ def check_distinct_pair(pairs):
 
 if __name__ == "__main__":
 
-    sys.argv = 'SevenSnake.py', 'D:\\matrix100.csv'
+    #sys.argv = 'SevenSnake.py', 'D:\\matrix100.csv'
     if len(sys.argv) != 2:
         print("Correct usage: 'python SevenSnake.py csv_full_path.csv'")
         

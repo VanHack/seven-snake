@@ -15,11 +15,28 @@ def load_csv(path_to_file):
             matrixA.append(tuple(map(int, line.split(","))))
 
 ## See if cell is inside matrix boundaries
-def check_inside(posXY):
-    if posXY[0] < len(matrixA) and posXY[0] >= 0 and posXY[1] < len(matrixA[0]) and posXY[1] >= 0:
+def check_inside(cell):
+    if cell[0] < len(matrixA) and cell[0] >= 0 and cell[1] < len(matrixA[0]) and cell[1] >= 0:
         return True
     else:
         return False
+
+
+def check_adjacency(path, cell):
+    ## If a "Square" is made in the snake, that snake will be invalid because at least 1 cell will have adjacency > 2
+    ## Bottom Right Square
+    if (cell[0],cell[1]+1) in path and (cell[0]+1,cell[1]+1) in path and (cell[0]+1,cell[1]) in path:
+        return False
+    ## Top Right Square
+    if (cell[0],cell[1]+1) in path and (cell[0]-1,cell[1]+1) in path and (cell[0]-1,cell[1]) in path:
+        return False
+    ## Bottom Left Square
+    if (cell[0]+1,cell[1]) in path and (cell[0]+1,cell[1]-1) in path and (cell[0],cell[1]-1) in path:
+        return False
+    ## Top Left Square
+    if (cell[0],cell[1]-1) in path and (cell[0]-1,cell[1]-1) in path and (cell[0]-1,cell[1]) in path:
+        return False
+    return True
 
 ## Find all snakes using a recursive algorithm
 def find_snakes_recursive(start, snake_size, acc, path):
@@ -35,28 +52,28 @@ def find_snakes_recursive(start, snake_size, acc, path):
     posX = start[0]
     posY = start[1]+1
     aux_pos = (posX,posY)
-    if aux_pos not in path and check_inside((posX, posY)):
+    if aux_pos not in path and check_inside((posX, posY)) and check_adjacency(path, (posX, posY)):
         find_snakes_recursive((posX,posY), snake_size, acc, path)
 
     ## Check Bottom
     posX = start[0]+1
     posY = start[1]
     aux_pos = (posX,posY)
-    if aux_pos not in path and check_inside((posX, posY)):
+    if aux_pos not in path and check_inside((posX, posY)) and check_adjacency(path, (posX, posY)):
         find_snakes_recursive((posX,posY), snake_size, acc, path)
 
     ## Check Top
     posX = start[0]-1
     posY = start[1]
     aux_pos = (posX,posY)
-    if aux_pos not in path and check_inside((posX, posY)):
+    if aux_pos not in path and check_inside((posX, posY)) and check_adjacency(path, (posX, posY)):
         find_snakes_recursive((posX,posY), snake_size, acc, path)
 
     ## Check Left
     posX = start[0]
     posY = start[1]-1
     aux_pos = (posX,posY)
-    if aux_pos not in path and check_inside((posX, posY)):
+    if aux_pos not in path and check_inside((posX, posY)) and check_adjacency(path, (posX, posY)):
         find_snakes_recursive((posX,posY), snake_size, acc, path)
 
 ## Find pairs with same value
@@ -67,7 +84,7 @@ def look_for_pair(results):
         results = results[len(pairs):]
         snake1, snake2 = check_distinct_pair(pairs)
         if snake1 and snake2:
-            print(head_value)
+            print("Snake Value: " + str(head_value))
             print(snake1)
             print(snake2)
             return
@@ -87,7 +104,7 @@ def check_distinct_pair(pairs):
 
 if __name__ == "__main__":
 
-    sys.argv = 'SevenSnake.py', 'D:\\matrix20.csv'
+    sys.argv = 'SevenSnake.py', 'D:\\matrix100.csv'
     if len(sys.argv) != 2:
         print("Correct usage: 'python SevenSnake.py csv_full_path.csv'")
         

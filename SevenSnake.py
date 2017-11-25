@@ -1,4 +1,3 @@
-import re
 import time
 import sys
 
@@ -89,7 +88,7 @@ def look_for_pair(results):
             print(snake2)
             return
     print("FAIL")
-            
+
 ## See if snake is different than others with same value
 def check_distinct_pair(pairs):
     for i in range(len(pairs)):
@@ -103,8 +102,7 @@ def check_distinct_pair(pairs):
     return [], []
 
 if __name__ == "__main__":
-
-    #sys.argv = 'SevenSnake.py', 'D:\\matrix100.csv'
+    sys.argv = 'SevenSnake.py', 'D:\\matrix100.csv'
     if len(sys.argv) != 2:
         print("Correct usage: 'python SevenSnake.py csv_full_path.csv'")
         

@@ -41,11 +41,10 @@ def check_adjacency(path, cell):
 def find_snakes_recursive(start, snake_size, acc, path):
     acc += matrixA[start[0]][start[1]]
     path = path + [(start[0],start[1])]
-    #path += str(start[0]) + "," + str(start[1]) + "; "
     snake_size += 1
     if snake_size >= snake_max_size:
         result_list.append((acc, path))
-        return True
+        return
 
     ## Check Right
     posX = start[0]
@@ -91,12 +90,14 @@ def look_for_pair(results):
 
 ## See if snake is different than others with same value
 def check_distinct_pair(pairs):
-    for i in range(len(pairs)):
+    for i, _ in enumerate(pairs):
         for j in range(i+1, len(pairs)):
             dif_cells = 0
             for cell in pairs[i]:
                 if cell not in pairs[j]:
                     dif_cells += 1
+                else:
+                    break
             if dif_cells == 7:
                 return pairs[i], pairs[j]
     return [], []
@@ -105,7 +106,7 @@ if __name__ == "__main__":
     #sys.argv = 'SevenSnake.py', 'D:\\matrix100.csv'
     if len(sys.argv) != 2:
         print("Correct usage: 'python SevenSnake.py csv_full_path.csv'")
-        
+
     else:
         start_time = time.time()
         load_csv(sys.argv[1])
@@ -129,5 +130,4 @@ if __name__ == "__main__":
         end_time = time.time()
         #print("Looking for a pair time: " + str(end_time-start_time))
 
-        #print(result_list)
         #print("Results Size: " + str(len(result_list)))

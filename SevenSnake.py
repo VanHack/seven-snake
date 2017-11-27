@@ -20,7 +20,6 @@ def check_inside(cell):
     else:
         return False
 
-
 def check_adjacency(path, cell):
     ## If a "Square" is made in the snake, that snake will be invalid because at least 1 cell will have adjacency > 2
     ## Bottom Right Square
@@ -108,26 +107,9 @@ if __name__ == "__main__":
         print("Correct usage: 'python SevenSnake.py csv_full_path.csv'")
 
     else:
-        start_time = time.time()
         load_csv(sys.argv[1])
-        end_time = time.time()
-        #print("Time to load file: " + str(end_time-start_time))
-
-        start_time = time.time()
         for i in range(len(matrixA)):
             for j in range(len(matrixA[0])):
                 find_snakes_recursive((i,j), 0, 0, list())
-        end_time = time.time()
-        #print("Snake generation time: " + str(end_time-start_time))
-
-        start_time = time.time()
         result_list.sort(key=lambda x: x[0])
-        end_time = time.time()
-        #print("Sorting time: " + str(end_time-start_time))
-
-        start_time = time.time()
         look_for_pair(result_list)
-        end_time = time.time()
-        #print("Looking for a pair time: " + str(end_time-start_time))
-
-        #print("Results Size: " + str(len(result_list)))
